@@ -8,10 +8,11 @@
       "Bash(php:*)",
       "Bash(node:*)",
       "Bash(npm --version:*)",
-      "Bash(docker run:*)"
+      "Bash(docker run:*)",
+      "Bash(file:*)"
     ],
     "additionalDirectories": [
-      "c:\\Users\\Vadim\\Desktop\\featureflag"
+      "/home/iaotle/featureflag"
     ]
   }
 }
