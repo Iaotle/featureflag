@@ -1,4 +1,3 @@
-- display which flags are enabled for the user in the frontend for debug purposes
 - figure out if we can create reports with disabled feature flags (we should validate on the server if the users can access the feature flag)
 - photos component will not load photo urls
 - bulk actions select all checkbox does not select all, bulk delete isn't implemented.
@@ -15,3 +14,9 @@
 - useflags isLoading is not used anywhere (we should use SWR pattern when we use this hook, but without SWR dependency as it's too much for this POC project)
 
 
+- logout doesn't do anything
+- flags fail to fetch
+
+
+
+- some flags don't have error message in the backend, for example priority_indicators, ai_damage_detection. when the frontend has stale flags, the server should inform the user with a message and a 403, and the frontend should display the error.

@@ -33,8 +33,8 @@ class ReportController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'damage_location' => 'required|string|max:255',
-            'priority' => 'required|in:low,medium,high',
+            'damage_location' => 'nullable|string|max:255',
+            'priority' => 'nullable|in:low,medium,high',
             'status' => 'string',
             'photos' => 'nullable|array',
             'user_identifier' => 'required|string',

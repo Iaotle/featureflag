@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->statefulApi();
         $middleware->validateCsrfTokens(except: [
             'api/flags/check',
+            'api/reports*',
         ]);
     })
     ->withSchedule(function (Schedule $schedule): void {

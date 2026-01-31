@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->string('damage_location');
-            $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
+            $table->string('damage_location')->nullable();
+            $table->enum('priority', ['low', 'medium', 'high'])->nullable();
             $table->string('status')->default('pending');
             $table->json('photos')->nullable();
             $table->string('user_identifier');
