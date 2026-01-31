@@ -2,10 +2,20 @@
 
 import { useEffect, useState } from 'react';
 import { getUserId } from '@/lib/flags';
+import { useFlags } from '@/hooks/useFlags';
 
 export default function UserInfo() {
   const [userId, setUserId] = useState<string>('');
   const [userGroup, setUserGroup] = useState<string>('');
+
+  // Fetch common feature flags
+  const flags = useFlags([
+    'damage_photo_upload',
+    'ai_damage_detection',
+    'priority_indicators',
+    'pdf_export',
+    'bulk_actions',
+  ]);
 
   useEffect(() => {
     const id = getUserId();
@@ -34,30 +44,55 @@ export default function UserInfo() {
     }
   }
 
+  // Get list of enabled flags
+  const enabledFlags = Object.entries(flags)
+    .filter(([key, value]) => key !== 'isLoading' && value === true)
+    .map(([key]) => key);
+
   return (
     <div className="bg-slate-800 text-white px-4 py-3 shadow-md">
-      <div className="max-w-6xl mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <span className="text-slate-300 text-sm font-medium">User ID:</span>
-            <code className="bg-slate-700 px-2 py-1 rounded text-sm font-mono text-blue-300">
-              {userId.slice(0, 8)}...
-            </code>
+      <div className="max-w-6xl mx-auto">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2">
+              <span className="text-slate-300 text-sm font-medium">User ID:</span>
+              <code className="bg-slate-700 px-2 py-1 rounded text-sm font-mono text-blue-300">
+                {userId.slice(0, 8)}...
+              </code>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-slate-300 text-sm font-medium">Group:</span>
+              <span className="bg-blue-600 px-3 py-1 rounded-full text-sm font-bold">
+                {userGroup}
+              </span>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-slate-300 text-sm font-medium">Group:</span>
-            <span className="bg-blue-600 px-3 py-1 rounded-full text-sm font-bold">
-              {userGroup}
-            </span>
-          </div>
+          <button
+            onClick={handleResetUser}
+            className="text-sm bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded transition-colors"
+            title="Get a new user ID and group assignment"
+          >
+            Reset User
+          </button>
         </div>
-        <button
-          onClick={handleResetUser}
-          className="text-sm bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded transition-colors"
-          title="Get a new user ID and group assignment"
-        >
-          Reset User
-        </button>
+
+        {/* Debug: Show enabled flags */}
+        <div className="flex items-start gap-2 text-xs">
+          <span className="text-slate-400">Enabled Flags:</span>
+          {flags.isLoading ? (
+            <span className="text-slate-500">Loading...</span>
+          ) : enabledFlags.length > 0 ? (
+            <div className="flex flex-wrap gap-1">
+              {enabledFlags.map((flag) => (
+                <span key={flag} className="bg-green-900/40 text-green-300 px-2 py-0.5 rounded">
+                  {flag}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <span className="text-slate-500">None</span>
+          )}
+        </div>
       </div>
     </div>
   );

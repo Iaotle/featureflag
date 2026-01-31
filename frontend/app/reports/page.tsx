@@ -36,11 +36,39 @@ export default function ReportsPage() {
     }
   }
 
-  function handleBulkDelete() {
+  async function handleBulkDelete() {
     if (selectedReports.length === 0) return;
-    if (confirm(`Delete ${selectedReports.length} report(s)?`)) {
-      // Implement bulk delete
-      console.log('Bulk delete:', selectedReports);
+    if (!confirm(`Delete ${selectedReports.length} report(s)?`)) return;
+
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+    try {
+      const response = await fetch(`${apiUrl}/reports/bulk-delete`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ids: selectedReports }),
+      });
+
+      if (response.ok) {
+        // Remove deleted reports from state
+        setReports(reports.filter((r) => !selectedReports.includes(r.id)));
+        setSelectedReports([]);
+      } else {
+        alert('Failed to delete reports');
+      }
+    } catch (error) {
+      console.error('Error deleting reports:', error);
+      alert('Failed to delete reports');
+    }
+  }
+
+  function handleSelectAll(checked: boolean) {
+    if (checked) {
+      setSelectedReports(reports.map((r) => r.id));
+    } else {
+      setSelectedReports([]);
     }
   }
 
@@ -103,7 +131,12 @@ export default function ReportsPage() {
                 <tr>
                   {flags.bulk_actions && (
                     <th className="p-4 text-left">
-                      <input type="checkbox" />
+                      <input
+                        type="checkbox"
+                        checked={selectedReports.length === reports.length && reports.length > 0}
+                        onChange={(e) => handleSelectAll(e.target.checked)}
+                        title="Select all reports"
+                      />
                     </th>
                   )}
                   <th className="p-4 text-left">Title</th>

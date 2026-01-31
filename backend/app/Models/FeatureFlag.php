@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class FeatureFlag extends Model
 {
@@ -16,6 +17,7 @@ class FeatureFlag extends Model
         'enabled_groups',
         'scheduled_start_at',
         'scheduled_end_at',
+        'uuid',
     ];
 
     protected $casts = [
@@ -72,11 +74,17 @@ class FeatureFlag extends Model
     }
 
     /**
-     * Boot method to clear cache on flag changes
+     * Boot method to clear cache on flag changes and auto-generate UUID
      */
     protected static function boot()
     {
         parent::boot();
+
+        static::creating(function ($flag) {
+            if (empty($flag->uuid)) {
+                $flag->uuid = (string) Str::uuid();
+            }
+        });
 
         static::saved(function ($flag) {
             Cache::flush();

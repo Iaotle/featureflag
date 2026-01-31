@@ -105,4 +105,22 @@ class ReportController extends Controller
 
         return response()->json(null, 204);
     }
+
+    /**
+     * Bulk delete damage reports.
+     */
+    public function bulkDelete(Request $request)
+    {
+        $validated = $request->validate([
+            'ids' => 'required|array|min:1',
+            'ids.*' => 'integer|exists:damage_reports,id',
+        ]);
+
+        $deletedCount = DamageReport::whereIn('id', $validated['ids'])->delete();
+
+        return response()->json([
+            'message' => "Successfully deleted {$deletedCount} report(s)",
+            'deleted_count' => $deletedCount,
+        ]);
+    }
 }

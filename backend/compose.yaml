@@ -64,6 +64,24 @@ services:
                 - ping
             retries: 3
             timeout: 5s
+    scheduler:
+        build:
+            context: './vendor/laravel/sail/runtimes/8.5'
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        image: 'sail-8.5/app'
+        command: sh -c "while true; do php artisan schedule:run --verbose --no-interaction & sleep 60; done"
+        environment:
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - sail
+        depends_on:
+            - pgsql
+            - redis
 networks:
     sail:
         driver: bridge

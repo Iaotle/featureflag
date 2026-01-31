@@ -21,7 +21,10 @@
       "Bash(docker restart:*)",
       "Bash(npm test:*)",
       "Bash(timeout 15 npm run dev:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(xargs cat:*)",
+      "Bash(tree:*)",
+      "Bash(composer require:*)"
     ],
     "additionalDirectories": [
       "/home/iaotle/featureflag"
