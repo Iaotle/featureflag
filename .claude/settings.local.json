@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(curl:*)",
+      "Bash(bash)",
+      "Bash(composer create-project:*)",
+      "Bash(php:*)",
+      "Bash(node:*)",
+      "Bash(npm --version:*)",
+      "Bash(docker run:*)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\Vadim\\Desktop\\featureflag"
+    ]
+  }
+}

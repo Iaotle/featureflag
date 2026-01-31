@@ -1,0 +1,8 @@
+- use absolute latest laravel version
+- use laravel sail for easy deployment
+- keep things straightforward, no complex setups
+- write everything in plain PHP, next.js. apply KISS principle universally
+- focus on maximum possible performance
+- consult the docs for best practices for next.js and laravel
+- use user groups A/B/C/D/E/F/G/H for feature rollouts
+- no additional or unnecessary features
