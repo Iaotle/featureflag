@@ -9,7 +9,17 @@
       "Bash(node:*)",
       "Bash(npm --version:*)",
       "Bash(docker run:*)",
-      "Bash(file:*)"
+      "Bash(file:*)",
+      "Bash(sudo chown:*)",
+      "Bash(./vendor/bin/sail:*)",
+      "Bash(npx create-next-app:*)",
+      "Bash(npx:*)",
+      "Bash(npm install:*)",
+      "Bash(/home/iaotle/featureflag/backend/vendor/bin/sail artisan tinker:*)",
+      "Bash(/home/iaotle/featureflag/backend/vendor/bin/sail up:*)",
+      "Bash(docker exec:*)",
+      "Bash(docker restart:*)",
+      "Bash(npm test:*)"
     ],
     "additionalDirectories": [
       "/home/iaotle/featureflag"
