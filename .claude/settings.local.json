@@ -19,7 +19,9 @@
       "Bash(/home/iaotle/featureflag/backend/vendor/bin/sail up:*)",
       "Bash(docker exec:*)",
       "Bash(docker restart:*)",
-      "Bash(npm test:*)"
+      "Bash(npm test:*)",
+      "Bash(timeout 15 npm run dev:*)",
+      "Bash(ls:*)"
     ],
     "additionalDirectories": [
       "/home/iaotle/featureflag"
