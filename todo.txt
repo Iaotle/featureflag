@@ -1,0 +1,24 @@
+- display which flags are enabled for the user in the frontend for debug purposes
+- figure out if we can create reports with disabled feature flags (we should validate on the server if the users can access the feature flag)
+- photos component will not load photos
+- bulk actions select all checkbox does not select all, bulk delete isn't implemented.
+- readme commands don't work:
+    - ~/featureflag/backend (main*) » ./vendor/bin/sail redis redis-cli KEYS "flag:*"                                                                                                                iaotle@hightemplar
+        (error) ERR unknown command 'redis-cli', with args beginning with: 'KEYS' 'flag:*'     
+- flag IDs should be uuid
+- flag interactions can be done through flag names, instead of using flag IDs
+- scheduler missing (we need something to call schedule:run, add docker-compose)
+- tests don't actually run anything useful for now
+- type-check doesn't exist
+- lint
+- !!!admin env is missing!!! (need simple login with management ui, password reset)
+- useflags isLoading is not used anywhere (we should use SWR pattern when we use this hook, but without SWR dependency as it's too much for this POC project)
+
+
+
+
+
+wontfix:
+- users don't really exist, the uuid is generated in flags.ts
+- admin and user frontend should be separated
+- SWR with local mutations and all the nice features we get from it

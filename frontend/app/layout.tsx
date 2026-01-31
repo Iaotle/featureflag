@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Car Damage Reports - Feature Flag Demo",
-  description: "Feature flag service demo with car damage reports",
+  title: "Car Damage Reports",
+  description: "Submit detailed car damage reports.",
 };
 
 export default function RootLayout({

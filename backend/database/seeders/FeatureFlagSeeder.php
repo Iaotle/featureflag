@@ -44,7 +44,7 @@ class FeatureFlagSeeder extends Seeder
                 'is_active' => false,
                 'rollout_type' => 'boolean',
                 'enabled_groups' => null,
-                'scheduled_start_at' => now()->addHour(),
+                'scheduled_start_at' => now()->addMinutes(5),
             ],
             [
                 'name' => 'Bulk Actions',
