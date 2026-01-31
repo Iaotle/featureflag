@@ -1,11 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function AdminNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const { user, logout } = useAuth();
 
   const navItems = [
@@ -34,11 +35,10 @@ export default function AdminNav() {
           <li key={item.href}>
             <Link
               href={item.href}
-              className={`block px-4 py-2 rounded ${
-                isActive(item.href)
+              className={`block px-4 py-2 rounded ${isActive(item.href)
                   ? 'bg-blue-600 text-white'
                   : 'text-gray-300 hover:bg-gray-700'
-              }`}
+                }`}
             >
               {item.label}
             </Link>
@@ -48,7 +48,10 @@ export default function AdminNav() {
 
       <div className="mt-8">
         <button
-          onClick={() => logout()}
+          onClick={async () => {
+            await logout();
+            router.push('/admin/login');
+          }}
           className="w-full px-4 py-2 bg-red-600 hover:bg-red-700 rounded text-white"
         >
           Logout

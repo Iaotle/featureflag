@@ -31,6 +31,7 @@ export async function fetchFlags(flagKeys: string[]): Promise<Record<string, boo
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       body: JSON.stringify({
         flags: flagKeys,

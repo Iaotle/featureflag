@@ -2,10 +2,10 @@
 
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { useAuth } from '@/hooks/useAuth';
+import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 import AdminNav from '@/components/admin/AdminNav';
 
-export default function AdminLayout({
+function AdminLayoutInner({
   children,
 }: {
   children: React.ReactNode;
@@ -47,5 +47,17 @@ export default function AdminLayout({
         {children}
       </main>
     </div>
+  );
+}
+
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <AuthProvider>
+      <AdminLayoutInner>{children}</AdminLayoutInner>
+    </AuthProvider>
   );
 }

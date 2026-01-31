@@ -8,8 +8,8 @@ export default function UserInfo() {
   const [userId, setUserId] = useState<string>('');
   const [userGroup, setUserGroup] = useState<string>('');
 
-  // Fetch common feature flags
-  const flags = useFlags([
+  // Fetch common feature flags - use object spread to separate isLoading from flag values
+  const { isLoading, ...flags } = useFlags([
     'damage_photo_upload',
     'ai_damage_detection',
     'priority_indicators',
@@ -44,9 +44,9 @@ export default function UserInfo() {
     }
   }
 
-  // Get list of enabled flags
+  // Get list of enabled flags - no need to filter out isLoading since we destructured it separately
   const enabledFlags = Object.entries(flags)
-    .filter(([key, value]) => key !== 'isLoading' && value === true)
+    .filter(([, value]) => value === true)
     .map(([key]) => key);
 
   return (
@@ -79,7 +79,7 @@ export default function UserInfo() {
         {/* Debug: Show enabled flags */}
         <div className="flex items-start gap-2 text-xs">
           <span className="text-slate-400">Enabled Flags:</span>
-          {flags.isLoading ? (
+          {isLoading ? (
             <span className="text-slate-500">Loading...</span>
           ) : enabledFlags.length > 0 ? (
             <div className="flex flex-wrap gap-1">

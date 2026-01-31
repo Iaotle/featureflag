@@ -72,6 +72,7 @@ export async function logout(): Promise<void> {
   const csrfToken = getCsrfTokenFromCookie();
 
   const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
     'Accept': 'application/json',
   };
 
@@ -79,7 +80,7 @@ export async function logout(): Promise<void> {
     headers['X-XSRF-TOKEN'] = csrfToken;
   }
 
-  await fetch(`${API_URL}/logout`, {
+  const response = await fetch(`${API_URL}/logout`, {
     method: 'POST',
     headers,
     credentials: 'include',

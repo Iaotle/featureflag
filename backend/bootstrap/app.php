@@ -14,6 +14,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->statefulApi();
+        $middleware->validateCsrfTokens(except: [
+            'api/flags/check',
+        ]);
     })
     ->withSchedule(function (Schedule $schedule): void {
         $schedule->command('flags:process')->everyMinute();

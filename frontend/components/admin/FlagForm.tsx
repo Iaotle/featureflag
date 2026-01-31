@@ -11,6 +11,15 @@ interface FlagFormProps {
 
 const USER_GROUPS: UserGroup[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
+/**
+ * Convert ISO datetime string to datetime-local format (YYYY-MM-DDTHH:mm)
+ */
+function toDatetimeLocal(isoString: string | null | undefined): string {
+  if (!isoString) return '';
+  // Take first 16 characters of ISO string (YYYY-MM-DDTHH:mm)
+  return isoString.slice(0, 16);
+}
+
 export default function FlagForm({ initialData, onSubmit, isSubmitting }: FlagFormProps) {
   const [formData, setFormData] = useState<CreateFlagData>({
     name: initialData?.name || '',
@@ -19,8 +28,8 @@ export default function FlagForm({ initialData, onSubmit, isSubmitting }: FlagFo
     is_active: initialData?.is_active ?? true,
     rollout_type: initialData?.rollout_type || 'boolean',
     enabled_groups: initialData?.enabled_groups || [],
-    scheduled_start_at: initialData?.scheduled_start_at || '',
-    scheduled_end_at: initialData?.scheduled_end_at || '',
+    scheduled_start_at: toDatetimeLocal(initialData?.scheduled_start_at),
+    scheduled_end_at: toDatetimeLocal(initialData?.scheduled_end_at),
   });
 
   const [error, setError] = useState('');
