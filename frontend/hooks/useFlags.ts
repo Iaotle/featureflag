@@ -70,6 +70,8 @@ export function useFlags(flagKeys: string[]): UseFlagsResult {
     return () => {
       mountedRef.current = false;
     };
+    // cacheKey is derived from flagKeys, so it's safe to use it as the only dependency
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cacheKey]);
 
   return {

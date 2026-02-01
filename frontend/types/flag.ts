@@ -27,4 +27,4 @@ export interface CreateFlagData {
   scheduled_end_at?: string;
 }
 
-export interface UpdateFlagData extends Partial<CreateFlagData> {}
+export type UpdateFlagData = Partial<CreateFlagData>;

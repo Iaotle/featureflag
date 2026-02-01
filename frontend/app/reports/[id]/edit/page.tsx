@@ -17,10 +17,6 @@ export default function EditReportPage() {
 
   const flags = useFlags(['damage_photo_upload']);
 
-  useEffect(() => {
-    fetchReport();
-  }, [params.id]);
-
   async function fetchReport() {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -39,6 +35,11 @@ export default function EditReportPage() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    fetchReport();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.id]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

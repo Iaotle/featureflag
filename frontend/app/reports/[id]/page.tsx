@@ -16,10 +16,6 @@ export default function ViewReportPage() {
 
   const flags = useFlags(['priority_indicators', 'ai_damage_detection']);
 
-  useEffect(() => {
-    fetchReport();
-  }, [params.id]);
-
   async function fetchReport() {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -38,6 +34,11 @@ export default function ViewReportPage() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    fetchReport();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.id]);
 
   async function handleDelete() {
     if (!confirm('Are you sure you want to delete this report?')) return;

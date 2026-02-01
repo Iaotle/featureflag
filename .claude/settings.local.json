@@ -26,7 +26,8 @@
       "Bash(tree:*)",
       "Bash(composer require:*)",
       "Bash(netstat:*)",
-      "Bash(ss:*)"
+      "Bash(ss:*)",
+      "Bash(npm run lint)"
     ],
     "additionalDirectories": [
       "/home/iaotle/featureflag"

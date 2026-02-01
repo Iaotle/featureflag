@@ -2,21 +2,14 @@
 - photos component will not load photo urls
 - bulk actions select all checkbox does not select all, bulk delete isn't implemented.
 - readme commands don't work:
-    - ~/featureflag/backend (main*) » ./vendor/bin/sail redis redis-cli KEYS "flag:*"                                                                                                                iaotle@hightemplar
+    - ~/featureflag/backend (main*) » ./vendor/bin/sail redis redis-cli KEYS "flag:*"
         (error) ERR unknown command 'redis-cli', with args beginning with: 'KEYS' 'flag:*'     
-- flag IDs should be uuid
-- flag interactions can be done through flag names, instead of using flag IDs
-- scheduler missing (we need something to call schedule:run, add docker-compose)
 - tests don't actually run anything useful for now
 - type-check doesn't exist
 - lint
-- !!!admin env is missing!!! (need simple login with management ui, password reset)
-- useflags isLoading is not used anywhere (we should use SWR pattern when we use this hook, but without SWR dependency as it's too much for this POC project)
-
-
-- logout doesn't do anything
-- flags fail to fetch
 
 
 
 - some flags don't have error message in the backend, for example priority_indicators, ai_damage_detection. when the frontend has stale flags, the server should inform the user with a message and a 403, and the frontend should display the error.
+- simplify useFlags hook
+- improve auth maybe

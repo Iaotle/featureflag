@@ -80,7 +80,7 @@ export async function logout(): Promise<void> {
     headers['X-XSRF-TOKEN'] = csrfToken;
   }
 
-  const response = await fetch(`${API_URL}/logout`, {
+  await fetch(`${API_URL}/logout`, {
     method: 'POST',
     headers,
     credentials: 'include',
@@ -105,7 +105,7 @@ export async function getCurrentUser(): Promise<User | null> {
 
     const data = await response.json();
     return data.user;
-  } catch (error) {
+  } catch {
     return null;
   }
 }

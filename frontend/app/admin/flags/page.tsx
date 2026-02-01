@@ -2,14 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { FeatureFlag } from '@/types/flag';
 import * as flagsApi from '@/lib/admin-flags';
 
 export default function FlagsListPage() {
   const [flags, setFlags] = useState<FeatureFlag[]>([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     loadFlags();
@@ -34,7 +32,7 @@ export default function FlagsListPage() {
     try {
       await flagsApi.deleteFlag(id);
       setFlags(flags.filter((f) => f.id !== id));
-    } catch (error) {
+    } catch {
       alert('Failed to delete flag');
     }
   }
@@ -45,7 +43,7 @@ export default function FlagsListPage() {
         is_active: !flag.is_active,
       });
       setFlags(flags.map((f) => (f.id === flag.id ? updated : f)));
-    } catch (error) {
+    } catch {
       alert('Failed to toggle flag');
     }
   }

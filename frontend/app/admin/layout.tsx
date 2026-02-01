@@ -2,8 +2,9 @@
 
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { AuthProvider, useAuth } from '@/contexts/AuthContext';
+import { AuthProvider } from '@/contexts/AuthContext';
 import AdminNav from '@/components/admin/AdminNav';
+import { useAuth } from '@/hooks/useAuth';
 
 function AdminLayoutInner({
   children,

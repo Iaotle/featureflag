@@ -34,7 +34,7 @@ export default function FlagForm({ initialData, onSubmit, isSubmitting }: FlagFo
 
   const [error, setError] = useState('');
 
-  function handleChange(field: keyof CreateFlagData, value: any) {
+  function handleChange<K extends keyof CreateFlagData>(field: K, value: CreateFlagData[K]) {
     setFormData((prev) => ({ ...prev, [field]: value }));
   }
 

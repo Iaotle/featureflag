@@ -15,10 +15,6 @@ export default function EditFlagPage() {
   const params = useParams();
   const id = params.id as string;
 
-  useEffect(() => {
-    loadFlag();
-  }, [id]);
-
   async function loadFlag() {
     try {
       const data = await flagsApi.getFlag(id);
@@ -31,6 +27,11 @@ export default function EditFlagPage() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    loadFlag();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   async function handleSubmit(data: CreateFlagData) {
     setIsSubmitting(true);

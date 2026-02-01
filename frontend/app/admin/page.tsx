@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { FeatureFlag } from '@/types/flag';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({
@@ -10,27 +11,28 @@ export default function AdminDashboard() {
     inactiveFlags: 0,
   });
 
-  useEffect(() => {
-    fetchStats();
-  }, []);
-
   async function fetchStats() {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/flags`, {
         credentials: 'include',
       });
       if (response.ok) {
-        const flags = await response.json();
+        const flags: FeatureFlag[] = await response.json();
         setStats({
           totalFlags: flags.length,
-          activeFlags: flags.filter((f: any) => f.is_active).length,
-          inactiveFlags: flags.filter((f: any) => !f.is_active).length,
+          activeFlags: flags.filter((f) => f.is_active).length,
+          inactiveFlags: flags.filter((f) => !f.is_active).length,
         });
       }
     } catch (error) {
       console.error('Failed to fetch stats:', error);
     }
   }
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchStats();
+  }, [])
 
   return (
     <div>

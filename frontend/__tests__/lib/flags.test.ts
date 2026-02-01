@@ -26,6 +26,7 @@ describe('getUserId', () => {
 
   it('should return server-side-render for SSR', () => {
     const originalWindow = global.window
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     delete (global as any).window
 
     const userId = getUserId()
