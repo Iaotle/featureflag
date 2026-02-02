@@ -3,27 +3,37 @@ import PriorityBadge from '@/components/PriorityBadge'
 
 describe('PriorityBadge', () => {
   it('should render low priority badge with correct styles', () => {
-    render(<PriorityBadge priority="low" />)
+    const { container } = render(<PriorityBadge priority="low" />)
 
     const badge = screen.getByText('low')
     expect(badge).toBeInTheDocument()
-    expect(badge).toHaveClass('bg-green-100', 'text-green-800')
+
+    // The parent span has the color classes
+    const parentBadge = container.querySelector('.bg-green-100')
+    expect(parentBadge).toBeInTheDocument()
+    expect(parentBadge).toHaveClass('text-green-800')
   })
 
   it('should render medium priority badge with correct styles', () => {
-    render(<PriorityBadge priority="medium" />)
+    const { container } = render(<PriorityBadge priority="medium" />)
 
     const badge = screen.getByText('medium')
     expect(badge).toBeInTheDocument()
-    expect(badge).toHaveClass('bg-yellow-100', 'text-yellow-800')
+
+    const parentBadge = container.querySelector('.bg-yellow-100')
+    expect(parentBadge).toBeInTheDocument()
+    expect(parentBadge).toHaveClass('text-yellow-800')
   })
 
   it('should render high priority badge with correct styles', () => {
-    render(<PriorityBadge priority="high" />)
+    const { container } = render(<PriorityBadge priority="high" />)
 
     const badge = screen.getByText('high')
     expect(badge).toBeInTheDocument()
-    expect(badge).toHaveClass('bg-red-100', 'text-red-800')
+
+    const parentBadge = container.querySelector('.bg-red-100')
+    expect(parentBadge).toBeInTheDocument()
+    expect(parentBadge).toHaveClass('text-red-800')
   })
 
   it('should display priority icon for low', () => {
@@ -39,5 +49,10 @@ describe('PriorityBadge', () => {
   it('should display priority icon for high', () => {
     render(<PriorityBadge priority="high" />)
     expect(screen.getByText('⬆')).toBeInTheDocument()
+  })
+
+  it('should render N/A for null priority', () => {
+    render(<PriorityBadge priority={null} />)
+    expect(screen.getByText('N/A')).toBeInTheDocument()
   })
 })

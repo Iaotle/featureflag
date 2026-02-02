@@ -15,6 +15,9 @@ const customJestConfig = {
     '**/__tests__/**/*.[jt]s?(x)',
     '**/?(*.)+(spec|test).[jt]s?(x)',
   ],
+  transformIgnorePatterns: [
+    '/node_modules/(?!(uuid)/)',
+  ],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': ['@swc/jest', {
       jsc: {

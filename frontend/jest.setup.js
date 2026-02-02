@@ -1,5 +1,10 @@
 import '@testing-library/jest-dom'
 
+// Mock uuid module
+jest.mock('uuid', () => ({
+  v4: () => 'mock-uuid-1234-5678-9012',
+}))
+
 // Mock Next.js router
 jest.mock('next/navigation', () => ({
   useRouter() {
@@ -17,14 +22,13 @@ jest.mock('next/navigation', () => ({
   },
 }))
 
-// Mock window.localStorage
-const localStorageMock = {
+// Mock window.localStorage with proper jest functions
+global.localStorage = {
   getItem: jest.fn(),
   setItem: jest.fn(),
   removeItem: jest.fn(),
   clear: jest.fn(),
 }
-global.localStorage = localStorageMock
 
 // Mock fetch
 global.fetch = jest.fn()

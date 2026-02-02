@@ -10,6 +10,10 @@ class AuthTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Test that users can authenticate.
+     * Uses non-JSON request to trigger web middleware with session support.
+     */
     public function test_login_with_valid_credentials(): void
     {
         $user = User::factory()->create([
@@ -17,10 +21,11 @@ class AuthTest extends TestCase
             'password' => bcrypt('password'),
         ]);
 
-        $response = $this->postJson('/api/login', [
+        // Use regular post with Accept header to get JSON response but with session support
+        $response = $this->post('/api/login', [
             'email' => 'test@example.com',
             'password' => 'password',
-        ]);
+        ], ['Accept' => 'application/json']);
 
         $response->assertStatus(200)
             ->assertJsonStructure(['user' => ['id', 'email', 'name']]);
@@ -33,10 +38,10 @@ class AuthTest extends TestCase
             'password' => bcrypt('password'),
         ]);
 
-        $response = $this->postJson('/api/login', [
+        $response = $this->post('/api/login', [
             'email' => 'test@example.com',
             'password' => 'wrong-password',
-        ]);
+        ], ['Accept' => 'application/json']);
 
         $response->assertStatus(401)
             ->assertJson(['message' => 'The provided credentials are incorrect.']);
@@ -46,9 +51,12 @@ class AuthTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->postJson('/api/logout');
+        // Use regular post with Accept header for session support
+        $response = $this->actingAs($user)
+            ->post('/api/logout', [], ['Accept' => 'application/json']);
 
-        $response->assertStatus(200);
+        $response->assertStatus(200)
+            ->assertJson(['message' => 'Logged out successfully']);
     }
 
     public function test_user_endpoint_requires_auth(): void
@@ -73,5 +81,24 @@ class AuthTest extends TestCase
                     'email' => 'test@example.com',
                 ]
             ]);
+    }
+
+    public function test_login_validates_required_fields(): void
+    {
+        $response = $this->postJson('/api/login', []);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['email', 'password']);
+    }
+
+    public function test_login_validates_email_format(): void
+    {
+        $response = $this->postJson('/api/login', [
+            'email' => 'invalid-email',
+            'password' => 'password',
+        ]);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['email']);
     }
 }

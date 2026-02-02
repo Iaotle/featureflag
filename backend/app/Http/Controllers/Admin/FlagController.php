@@ -44,9 +44,14 @@ class FlagController extends Controller
      */
     public function show(string $identifier)
     {
-        $flag = FeatureFlag::where('id', $identifier)
-            ->orWhere('key', $identifier)
-            ->firstOrFail();
+        // Check if identifier is numeric (ID) or string (key)
+        if (is_numeric($identifier)) {
+            $flag = FeatureFlag::where('id', $identifier)
+                ->orWhere('key', $identifier)
+                ->firstOrFail();
+        } else {
+            $flag = FeatureFlag::where('key', $identifier)->firstOrFail();
+        }
 
         return response()->json($flag);
     }
@@ -57,9 +62,14 @@ class FlagController extends Controller
      */
     public function update(Request $request, string $identifier)
     {
-        $flag = FeatureFlag::where('id', $identifier)
-            ->orWhere('key', $identifier)
-            ->firstOrFail();
+        // Check if identifier is numeric (ID) or string (key)
+        if (is_numeric($identifier)) {
+            $flag = FeatureFlag::where('id', $identifier)
+                ->orWhere('key', $identifier)
+                ->firstOrFail();
+        } else {
+            $flag = FeatureFlag::where('key', $identifier)->firstOrFail();
+        }
 
         $validated = $request->validate([
             'name' => 'string|max:255',
@@ -84,9 +94,14 @@ class FlagController extends Controller
      */
     public function destroy(string $identifier)
     {
-        $flag = FeatureFlag::where('id', $identifier)
-            ->orWhere('key', $identifier)
-            ->firstOrFail();
+        // Check if identifier is numeric (ID) or string (key)
+        if (is_numeric($identifier)) {
+            $flag = FeatureFlag::where('id', $identifier)
+                ->orWhere('key', $identifier)
+                ->firstOrFail();
+        } else {
+            $flag = FeatureFlag::where('key', $identifier)->firstOrFail();
+        }
 
         $flag->delete();
 

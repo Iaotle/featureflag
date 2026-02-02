@@ -28,7 +28,11 @@ class AuthController extends Controller
         }
 
         Auth::login($user);
-        $request->session()->regenerate();
+
+        // Regenerate session if available (web requests)
+        if ($request->hasSession()) {
+            $request->session()->regenerate();
+        }
 
         return response()->json([
             'user' => $user
@@ -41,8 +45,12 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::guard('web')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+
+        // Invalidate session if available (web requests)
+        if ($request->hasSession()) {
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
 
         return response()->json([
             'message' => 'Logged out successfully'
