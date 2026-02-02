@@ -10,8 +10,6 @@ TODOs:
 - lint
 
 
-
-- some flags don't have error message in the backend, for example priority_indicators, ai_damage_detection. when the frontend has stale flags, the server should inform the user with a message and a 403, and the frontend should display the error.
 - simplify useFlags hook
 - improve auth maybe
 - flag controller duplicated (one of them is for debug purposes)
@@ -25,10 +23,10 @@ TODOs:
 
 
 TESTS:
-- write a test to check that each user group can submit a report with appropriate fields
-- write a test to check that flags are validated on the server side
-- write a test to check that admin can log in, validate a flag
-- write a test to create a flag with (de)activation date in 30s, and check that the flag will be correctly enabled/disabled with the scheduled job (runs every minute) (two separate tests)
+   WARN  Metadata found in doc-comment for method Tests\Feature\ReportControllerTest::test_each_user_group_can_submit_basic_report(). Metadata in doc-comments is deprecated and will no longer be supported in PHPUnit 12. Update your test code to use attributes instead.
+   WARN  Metadata found in doc-comment for method Tests\Feature\ReportControllerTest::test_each_user_group_can_submit_report_with_photos_when_boolean_flag(). Metadata in doc-comments is deprecated and will no longer be supported in PHPUnit 12. Update your test code to use attributes instead.
+   WARN  Metadata found in doc-comment for method Tests\Feature\ReportControllerTest::test_each_user_group_can_submit_report_with_priority_when_boolean_flag(). Metadata in doc-comments is deprecated and will no longer be supported in PHPUnit 12. Update your test code to use attributes instead.
+   WARN  Metadata found in doc-comment for method Tests\Feature\ReportControllerTest::test_each_user_group_can_submit_complete_report_when_flags_enabled_for_group(). Metadata in doc-comments is deprecated and will no longer be supported in PHPUnit 12. Update your test code to use attributes instead.
 
 
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useState, useEffect, ReactNode } from 'react';
 import { User, LoginCredentials } from '@/types/auth';
 import * as authLib from '@/lib/auth';
 

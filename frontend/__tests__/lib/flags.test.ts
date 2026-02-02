@@ -34,10 +34,10 @@ describe('fetchFlags', () => {
       flag2: false,
     }
 
-    ;(global.fetch as jest.Mock).mockResolvedValue({
-      ok: true,
-      json: async () => mockResponse,
-    })
+      ; (global.fetch as jest.Mock).mockResolvedValue({
+        ok: true,
+        json: async () => mockResponse,
+      })
 
     const result = await fetchFlags(['flag1', 'flag2'])
 
@@ -52,7 +52,9 @@ describe('fetchFlags', () => {
   })
 
   it('should return all false flags on API error', async () => {
-    ;(global.fetch as jest.Mock).mockResolvedValue({
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => { })
+
+    ; (global.fetch as jest.Mock).mockResolvedValue({
       ok: false,
       statusText: 'Internal Server Error',
     })
@@ -63,10 +65,13 @@ describe('fetchFlags', () => {
       flag1: false,
       flag2: false,
     })
+    spy.mockRestore()
   })
 
   it('should return all false flags on network error', async () => {
-    ;(global.fetch as jest.Mock).mockRejectedValue(new Error('Network error'))
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => { })
+
+      ; (global.fetch as jest.Mock).mockRejectedValue(new Error('Network error'))
 
     const result = await fetchFlags(['flag1', 'flag2'])
 
@@ -74,10 +79,13 @@ describe('fetchFlags', () => {
       flag1: false,
       flag2: false,
     })
+
+    spy.mockRestore()
   })
 
+
   it('should include user_id in request body', async () => {
-    ;(global.fetch as jest.Mock).mockResolvedValue({
+    ; (global.fetch as jest.Mock).mockResolvedValue({
       ok: true,
       json: async () => ({}),
     })
@@ -92,7 +100,7 @@ describe('fetchFlags', () => {
   })
 
   it('should handle empty flag array', async () => {
-    ;(global.fetch as jest.Mock).mockResolvedValue({
+    ; (global.fetch as jest.Mock).mockResolvedValue({
       ok: true,
       json: async () => ({}),
     })
@@ -103,7 +111,7 @@ describe('fetchFlags', () => {
   })
 
   it('should handle single flag request', async () => {
-    ;(global.fetch as jest.Mock).mockResolvedValue({
+    ; (global.fetch as jest.Mock).mockResolvedValue({
       ok: true,
       json: async () => ({ single_flag: true }),
     })
@@ -123,10 +131,10 @@ describe('fetchFlags', () => {
       flag5: true,
     }
 
-    ;(global.fetch as jest.Mock).mockResolvedValue({
-      ok: true,
-      json: async () => expectedResponse,
-    })
+      ; (global.fetch as jest.Mock).mockResolvedValue({
+        ok: true,
+        json: async () => expectedResponse,
+      })
 
     const result = await fetchFlags(flags)
 
