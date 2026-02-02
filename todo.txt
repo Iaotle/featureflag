@@ -1,5 +1,6 @@
+TODOs:
 - figure out if we can create reports with disabled feature flags (we should validate on the server if the users can access the feature flag)
-- photos component will not load photo urls
+- photos component will not display photo urls
 - bulk actions select all checkbox does not select all, bulk delete isn't implemented.
 - readme commands don't work:
     - ~/featureflag/backend (main*) » ./vendor/bin/sail redis redis-cli KEYS "flag:*"
@@ -13,3 +14,36 @@
 - some flags don't have error message in the backend, for example priority_indicators, ai_damage_detection. when the frontend has stale flags, the server should inform the user with a message and a 403, and the frontend should display the error.
 - simplify useFlags hook
 - improve auth maybe
+- flag controller duplicated (one of them is for debug purposes)
+- redis cache double-check
+- remove `backend/database/migrations/2026_01_31_210909_add_uuid_to_feature_flags.php` migration and just roll it into the create_users_table migration
+
+- TZ for frontend
+- README is outdated
+- create script to launch the whole app
+- script to run all tests
+
+
+TESTS:
+- write a test to check that each user group can submit a report with appropriate fields
+- write a test to check that flags are validated on the server side
+- write a test to check that admin can log in, validate a flag
+- write a test to create a flag with (de)activation date in 30s, and check that the flag will be correctly enabled/disabled with the scheduled job (runs every minute) (two separate tests)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+wontfix:
+- password reset isn't implemented
+- photo attach feature probably 

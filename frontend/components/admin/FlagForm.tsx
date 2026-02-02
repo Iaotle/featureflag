@@ -11,9 +11,6 @@ interface FlagFormProps {
 
 const USER_GROUPS: UserGroup[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
-/**
- * Convert ISO datetime string to datetime-local format (YYYY-MM-DDTHH:mm)
- */
 function toDatetimeLocal(isoString: string | null | undefined): string {
   if (!isoString) return '';
   // Take first 16 characters of ISO string (YYYY-MM-DDTHH:mm)
@@ -46,7 +43,7 @@ export default function FlagForm({ initialData, onSubmit, isSubmitting }: FlagFo
     handleChange('enabled_groups', newGroups);
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault();
     setError('');
 

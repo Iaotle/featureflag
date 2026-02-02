@@ -1,22 +1,30 @@
 import type { Priority } from '@/types/report';
 
 interface PriorityBadgeProps {
-  priority: Priority;
+  priority: Priority | null;
 }
 
-const priorityStyles: Record<Priority, string> = {
+const priorityStyles: Record<string, string> = {
   low: 'bg-green-100 text-green-800 border-green-200',
   medium: 'bg-yellow-100 text-yellow-800 border-yellow-200',
   high: 'bg-red-100 text-red-800 border-red-200',
 };
 
-const priorityIcons: Record<Priority, string> = {
+const priorityIcons: Record<string, string> = {
   low: '●',
   medium: '▲',
   high: '⬆',
 };
 
 export default function PriorityBadge({ priority }: PriorityBadgeProps) {
+  if (!priority) {
+    return (
+      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border bg-gray-100 text-gray-600 border-gray-200">
+        N/A
+      </span>
+    );
+  }
+
   return (
     <span
       className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium border ${priorityStyles[priority]}`}

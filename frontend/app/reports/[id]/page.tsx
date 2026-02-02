@@ -1,3 +1,4 @@
+// frontend/app/reports/[id]/page.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -135,9 +136,24 @@ export default function ViewReportPage() {
               <h3 className="text-sm font-medium text-gray-500 mb-2">Photos</h3>
               <div className="grid grid-cols-3 gap-4">
                 {report.photos.map((photo, index) => (
-                  <div key={index} className="bg-gray-100 p-4 rounded text-center">
-                    <p className="text-sm text-gray-600">Photo {index + 1}</p>
-                    <p className="text-xs text-gray-400 mt-1">{photo}</p>
+                  <div
+                    key={photo}
+                    className="relative bg-gray-100 rounded overflow-hidden"
+                  >
+                    <div className="aspect-square w-full bg-gray-200">
+                      <img
+                        src={photo}
+                        alt={`Damage photo ${index + 1}`}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                    <div className="p-2">
+                      <p className="text-xs text-gray-700 truncate" title={photo}>
+                        {photo}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>

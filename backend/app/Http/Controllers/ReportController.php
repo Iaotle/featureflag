@@ -39,14 +39,17 @@ class ReportController extends Controller
             'photos' => 'nullable|array',
             'user_identifier' => 'required|string',
         ]);
+        $userId = $validated['user_identifier'];
 
-        // Validate flag for photo upload if photos are provided
+        // Validate feature flags
         if (!empty($validated['photos'])) {
-            if (!FeatureFlag::checkFlag('damage_photo_upload', $validated['user_identifier'])) {
-                return response()->json([
-                    'message' => 'Photo upload feature is not available for your account.'
-                ], 403);
-            }
+            $resp = $this->assertFlagEnabledForUser('damage_photo_upload', $userId, 'Photo upload feature is not available for your account.');
+            if ($resp) return $resp;
+        }
+        
+        if (!empty($validated['priority'])) {
+            $resp = $this->assertFlagEnabledForUser('priority_indicators', $userId, 'Priority feature is not available for your account.');
+            if ($resp) return $resp;
         }
 
         $report = DamageReport::create($validated);
@@ -83,11 +86,14 @@ class ReportController extends Controller
         // Validate flag for photo upload if photos are being updated
         if (isset($validated['photos']) && !empty($validated['photos'])) {
             $userId = $validated['user_identifier'] ?? $report->user_identifier;
-            if (!FeatureFlag::checkFlag('damage_photo_upload', $userId)) {
-                return response()->json([
-                    'message' => 'Photo upload feature is not available for your account.'
-                ], 403);
-            }
+            $resp = $this->assertFlagEnabledForUser('damage_photo_upload', $userId, 'Photo upload feature is not available for your account.');
+            if ($resp) return $resp;
+        }
+
+        if (isset($validated['priority']) && !empty($validated['priority'])) {
+            $userId = $validated['user_identifier'] ?? $report->user_identifier;
+            $resp = $this->assertFlagEnabledForUser('priority_indicators', $userId, 'Priority feature is not available for your account.');
+            if ($resp) return $resp;
         }
 
         $report->update($validated);
@@ -116,11 +122,25 @@ class ReportController extends Controller
             'ids.*' => 'integer|exists:damage_reports,id',
         ]);
 
+        $resp = $this->assertFlagEnabledForUser('bulk_actions', $request->input('user_identifier'), 'Bulk actions feature is not available for your account.');
+        if ($resp) return $resp;
+
         $deletedCount = DamageReport::whereIn('id', $validated['ids'])->delete();
 
         return response()->json([
             'message' => "Successfully deleted {$deletedCount} report(s)",
             'deleted_count' => $deletedCount,
         ]);
+    }
+
+    private function assertFlagEnabledForUser(string $flagKey, ?string $userId, ?string $errorMessage = 'This feature is not available for your account.')
+    {
+        if (!FeatureFlag::checkFlag($flagKey, $userId)) {
+            return response()->json([
+                'message' => $errorMessage
+            ], 403);
+        }
+
+        return null;
     }
 }

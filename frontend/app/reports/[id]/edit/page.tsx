@@ -63,6 +63,7 @@ export default function EditReportPage() {
         const data = await response.json();
         setError(data.message || 'Feature not available');
         setSubmitting(false);
+        // TODO: force revalidate flag cache maybe? User experience is not the best if form fields disappear entirely after you get an error.
         return;
       }
 

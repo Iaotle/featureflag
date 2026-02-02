@@ -6,26 +6,21 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Admin\FlagController as AdminFlagController;
 use Illuminate\Support\Facades\Route;
 
-// Authentication Routes
-Route::post('login', [AuthController::class, 'login']);
-
-
+// Public API
 Route::apiResource('flags', FlagController::class);
+Route::post('flags/check', [FlagController::class, 'check']);
+Route::apiResource('reports', ReportController::class);
+Route::post('reports/bulk-delete', [ReportController::class, 'bulkDelete']);
 
-// Protected Auth Routes
+
+// Auth:
+Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('user', [AuthController::class, 'user']);
 });
 
-// Public Feature Flag Checking (anonymous users)
-Route::post('flags/check', [FlagController::class, 'check']);
-
-// Admin Routes (Protected)
+// Admin
 Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::apiResource('flags', AdminFlagController::class);
 });
-
-// Damage Reports API (Public)
-Route::apiResource('reports', ReportController::class);
-Route::post('reports/bulk-delete', [ReportController::class, 'bulkDelete']);

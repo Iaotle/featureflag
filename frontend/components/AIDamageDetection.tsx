@@ -14,18 +14,15 @@ export default function AIDamageDetection({ reportId, photos }: AIDamageDetectio
   async function handleAnalyze() {
     setAnalyzing(true);
 
-    // Simulate AI analysis
+    // Mock this whole feature. In a real-world application the server would reply, or as with the other flags, would return 403 with an error message.
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     const mockResults = `AI Analysis Results for Report #${reportId}:
 
 - Detected Damage Type: Front bumper dent
-- Severity: Moderate
 - Estimated Repair Cost: $500-$800
 - Recommended Action: Body shop repair
-- Confidence: 87%
-
-This feature is powered by AI damage detection (feature-flagged).`;
+- Confidence: 87%`;
 
     setResults(mockResults);
     setAnalyzing(false);
@@ -35,7 +32,7 @@ This feature is powered by AI damage detection (feature-flagged).`;
     <div className="border border-blue-200 bg-blue-50 rounded p-6 mt-6">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-lg font-semibold text-blue-900">AI Damage Detection</h3>
+          <h3 className="text-lg font-semibold text-blue-900">Automatic Damage Detection</h3>
           <p className="text-sm text-blue-700">Analyze damage using AI (feature-flagged)</p>
         </div>
         <button
@@ -43,7 +40,7 @@ This feature is powered by AI damage detection (feature-flagged).`;
           disabled={analyzing || photos.length === 0}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400"
         >
-          {analyzing ? 'Analyzing...' : 'Run AI Analysis'}
+          {analyzing ? 'Analyzing...' : 'Run Analysis'}
         </button>
       </div>
 

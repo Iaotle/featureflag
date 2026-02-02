@@ -1,3 +1,4 @@
+// frontend/components/PhotoUpload.tsx
 'use client';
 
 interface PhotoUploadProps {
@@ -5,11 +6,25 @@ interface PhotoUploadProps {
   onChange: (photos: string[]) => void;
 }
 
+function isValidHttpUrl(value: string) {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'http:' || url.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
 export default function PhotoUpload({ photos, onChange }: PhotoUploadProps) {
   function handleAddPhoto() {
-    const photoUrl = prompt('Enter photo URL or filename:');
-    if (photoUrl) {
+    const input = prompt('Enter photo URL (http/https):');
+    const photoUrl = (input || '').trim();
+    if (photoUrl && isValidHttpUrl(photoUrl)) {
       onChange([...photos, photoUrl]);
+      return;
+    }
+    if (photoUrl) {
+      alert('Please enter a valid http/https URL.');
     }
   }
 
@@ -27,12 +42,32 @@ export default function PhotoUpload({ photos, onChange }: PhotoUploadProps) {
       {photos.length > 0 && (
         <div className="grid grid-cols-2 gap-2 mb-3">
           {photos.map((photo, index) => (
-            <div key={index} className="relative bg-gray-100 p-3 rounded group">
-              <p className="text-sm truncate">{photo}</p>
+            <div
+              key={photo}
+              className="relative bg-gray-100 rounded overflow-hidden group"
+            >
+              <div className="aspect-square w-full bg-gray-200">
+                <img
+                  src={photo}
+                  alt={`Damage photo ${index + 1}`}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+
+              <div className="p-2">
+                <p className="text-xs text-gray-700 truncate" title={photo}>
+                  {photo}
+                </p>
+              </div>
+
               <button
                 type="button"
                 onClick={() => handleRemovePhoto(index)}
-                className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-7 h-7 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                aria-label="Remove photo"
+                title="Remove photo"
               >
                 ×
               </button>

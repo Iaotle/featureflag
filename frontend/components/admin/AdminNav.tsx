@@ -1,12 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function AdminNav() {
   const pathname = usePathname();
-  const router = useRouter();
   const { user, logout } = useAuth();
 
   const navItems = [
@@ -26,7 +25,10 @@ export default function AdminNav() {
       <div className="mb-8">
         <h1 className="text-2xl font-bold">Admin Panel</h1>
         {user && (
-          <p className="text-sm text-gray-400 mt-2">{user.email}</p>
+          <div>
+            <p className='text-lg text-white mt-2'>{user.name}</p>
+            <p className="text-sm text-gray-400 mt-2">{user.email}</p>
+          </div>
         )}
       </div>
 
@@ -36,8 +38,8 @@ export default function AdminNav() {
             <Link
               href={item.href}
               className={`block px-4 py-2 rounded ${isActive(item.href)
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-300 hover:bg-gray-700'
+                ? 'bg-blue-600 text-white'
+                : 'text-gray-300 hover:bg-gray-700'
                 }`}
             >
               {item.label}
@@ -50,7 +52,6 @@ export default function AdminNav() {
         <button
           onClick={async () => {
             await logout();
-            router.push('/admin/login');
           }}
           className="w-full px-4 py-2 bg-red-600 hover:bg-red-700 rounded text-white"
         >

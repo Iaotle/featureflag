@@ -44,6 +44,7 @@ class FeatureFlag extends Model
     {
         $cacheKey = "flag:{$key}:{$userId}";
 
+        // Flag definitinos are cached for longer than the checks for user flags. 60s check cache is probably not necessary here, though it might help if you have a truly humongous amount of flags
         return Cache::remember($cacheKey, 60, function () use ($key, $userId) {
             $flag = Cache::remember("flag:{$key}", 300, fn () => self::where('key', $key)->first());
 
@@ -51,17 +52,14 @@ class FeatureFlag extends Model
                 return false;
             }
 
-            // Check scheduled start time
             if ($flag->scheduled_start_at && now()->lt($flag->scheduled_start_at)) {
                 return false;
             }
 
-            // Check scheduled end time
             if ($flag->scheduled_end_at && now()->gt($flag->scheduled_end_at)) {
                 return false;
             }
 
-            // Boolean rollout - enabled for all
             if ($flag->rollout_type === 'boolean') {
                 return true;
             }

@@ -5,7 +5,7 @@ export interface DamageReport {
   title: string;
   description: string;
   damage_location: string;
-  priority: Priority;
+  priority?: Priority;
   status: string;
   photos: string[] | null;
   user_identifier: string;
@@ -16,8 +16,8 @@ export interface DamageReport {
 export interface CreateReportData {
   title: string;
   description: string;
-  damage_location: string;
-  priority: Priority;
+  damage_location?: string;
+  priority?: Priority;
   status?: string;
   photos?: string[];
   user_identifier: string;
