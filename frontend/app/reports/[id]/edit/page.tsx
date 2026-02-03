@@ -15,7 +15,7 @@ export default function EditReportPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const flags = useFlags(['damage_photo_upload']);
+  const flags = useFlags(['damage_photo_upload', 'priority_indicators']);
 
   async function fetchReport() {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -147,20 +147,22 @@ export default function EditReportPage() {
               />
             </div>
 
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">Priority *</label>
-              <select
-                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={formData.priority}
-                onChange={(e) =>
-                  setFormData({ ...formData, priority: e.target.value as Priority })
-                }
-              >
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-              </select>
-            </div>
+            {flags.priority_indicators && (
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">Priority *</label>
+                <select
+                  className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={formData.priority || 'medium'}
+                  onChange={(e) =>
+                    setFormData({ ...formData, priority: (e.target.value || 'medium') as Priority })
+                  }
+                >
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+            )}
 
             <div className="mb-4">
               <label className="block text-sm font-medium mb-2">Status</label>

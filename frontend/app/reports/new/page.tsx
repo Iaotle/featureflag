@@ -10,16 +10,19 @@ import PhotoUpload from '@/components/PhotoUpload';
 
 export default function NewReportPage() {
   const router = useRouter();
+
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const flags = useFlags(['damage_photo_upload', 'priority_indicators']);
+
   const [formData, setFormData] = useState<CreateReportData>({
     title: '',
     description: '',
     status: 'pending',
     user_identifier: getUserId(),
+    ...flags.priority_indicators && {priority: 'medium'}
   });
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const flags = useFlags(['damage_photo_upload', 'priority_indicators']);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -114,7 +117,7 @@ export default function NewReportPage() {
                 className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={formData.priority || 'medium'}
                 onChange={(e) =>
-                  setFormData({ ...formData, priority: e.target.value as Priority })
+                  setFormData({ ...formData, priority: (e.target.value || 'medium') as Priority })
                 }
               >
                 <option value="low">Low</option>

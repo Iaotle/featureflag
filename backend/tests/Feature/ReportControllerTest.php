@@ -283,6 +283,7 @@ class ReportControllerTest extends TestCase
 
     /**
      * Test each user group can submit a basic report (no flagged features)
+     *
      * @dataProvider userGroupProvider
      */
     public function test_each_user_group_can_submit_basic_report(string $group, string $userId): void
@@ -307,6 +308,7 @@ class ReportControllerTest extends TestCase
 
     /**
      * Test each user group can submit report with photos when flag is enabled for all groups
+     *
      * @dataProvider userGroupProvider
      */
     public function test_each_user_group_can_submit_report_with_photos_when_boolean_flag(string $group, string $userId): void
@@ -334,6 +336,7 @@ class ReportControllerTest extends TestCase
 
     /**
      * Test each user group can submit report with priority when flag is enabled for all groups
+     *
      * @dataProvider userGroupProvider
      */
     public function test_each_user_group_can_submit_report_with_priority_when_boolean_flag(string $group, string $userId): void
@@ -361,6 +364,7 @@ class ReportControllerTest extends TestCase
 
     /**
      * Test each user group can submit complete report when all flags are enabled for their group
+     *
      * @dataProvider userGroupProvider
      */
     public function test_each_user_group_can_submit_complete_report_when_flags_enabled_for_group(string $group, string $userId): void

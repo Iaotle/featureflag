@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\FlagController as AdminFlagController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FlagController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\Admin\FlagController as AdminFlagController;
 use Illuminate\Support\Facades\Route;
 
 // Public API
@@ -11,7 +11,6 @@ Route::apiResource('flags', FlagController::class);
 Route::post('flags/check', [FlagController::class, 'check']);
 Route::apiResource('reports', ReportController::class);
 Route::post('reports/bulk-delete', [ReportController::class, 'bulkDelete']);
-
 
 // Auth:
 Route::post('login', [AuthController::class, 'login']);

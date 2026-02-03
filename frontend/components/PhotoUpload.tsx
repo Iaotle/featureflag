@@ -1,5 +1,5 @@
-// frontend/components/PhotoUpload.tsx
 'use client';
+import Image from "next/image";
 
 interface PhotoUploadProps {
   photos: string[];
@@ -46,13 +46,15 @@ export default function PhotoUpload({ photos, onChange }: PhotoUploadProps) {
               key={photo}
               className="relative bg-gray-100 rounded overflow-hidden group"
             >
-              <div className="aspect-square w-full bg-gray-200">
-                <img
+              <div className="aspect-square w-full bg-gray-200 relative">
+                <Image
                   src={photo}
                   alt={`Damage photo ${index + 1}`}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
+                  className="object-cover"
+                  fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
                   referrerPolicy="no-referrer"
+                  unoptimized
                 />
               </div>
 

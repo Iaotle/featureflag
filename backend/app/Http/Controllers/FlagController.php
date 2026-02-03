@@ -43,6 +43,7 @@ class FlagController extends Controller
     public function show(string $id)
     {
         $flag = FeatureFlag::findOrFail($id);
+
         return response()->json($flag);
     }
 
@@ -55,7 +56,7 @@ class FlagController extends Controller
 
         $validated = $request->validate([
             'name' => 'string|max:255',
-            'key' => 'string|max:255|unique:feature_flags,key,' . $id,
+            'key' => 'string|max:255|unique:feature_flags,key,'.$id,
             'description' => 'nullable|string',
             'is_active' => 'boolean',
             'rollout_type' => 'in:boolean,user_groups',

@@ -88,121 +88,121 @@ export default function ReportsPage() {
     <div className="min-h-screen bg-gray-50">
       <UserInfo />
       <div className="p-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Car Damage Reports</h1>
-          <div className="flex gap-4">
-            {flags.pdf_export && (
-              <button
-                onClick={handleExportPDF}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        <div className="max-w-6xl mx-auto">
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-3xl font-bold">Car Damage Reports</h1>
+            <div className="flex gap-4">
+              {flags.pdf_export && (
+                <button
+                  onClick={handleExportPDF}
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                >
+                  Export PDF
+                </button>
+              )}
+              <Link
+                href="/reports/new"
+                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
               >
-                Export PDF
+                New Report
+              </Link>
+            </div>
+          </div>
+
+          {flags.bulk_actions && selectedReports.length > 0 && (
+            <div className="mb-4 p-4 bg-white rounded shadow">
+              <button
+                onClick={handleBulkDelete}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              >
+                Delete Selected ({selectedReports.length})
               </button>
-            )}
-            <Link
-              href="/reports/new"
-              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-            >
-              New Report
-            </Link>
-          </div>
-        </div>
+            </div>
+          )}
 
-        {flags.bulk_actions && selectedReports.length > 0 && (
-          <div className="mb-4 p-4 bg-white rounded shadow">
-            <button
-              onClick={handleBulkDelete}
-              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-            >
-              Delete Selected ({selectedReports.length})
-            </button>
-          </div>
-        )}
-
-        {reports.length === 0 ? (
-          <div className="bg-white rounded shadow p-8 text-center">
-            <p className="text-gray-500">No reports found. Create your first report!</p>
-          </div>
-        ) : (
-          <div className="bg-white rounded shadow">
-            <table className="w-full">
-              <thead className="bg-gray-100">
-                <tr>
-                  {flags.bulk_actions && (
-                    <th className="p-4 text-left">
-                      <input
-                        type="checkbox"
-                        checked={selectedReports.length === reports.length && reports.length > 0}
-                        onChange={(e) => handleSelectAll(e.target.checked)}
-                        title="Select all reports"
-                      />
-                    </th>
-                  )}
-                  <th className="p-4 text-left">Title</th>
-                  <th className="p-4 text-left">Location</th>
-                  <th className="p-4 text-left">Priority</th>
-                  <th className="p-4 text-left">Status</th>
-                  <th className="p-4 text-left">Created</th>
-                  <th className="p-4 text-left">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reports.map((report) => (
-                  <tr key={report.id} className="border-t hover:bg-gray-50">
+          {reports.length === 0 ? (
+            <div className="bg-white rounded shadow p-8 text-center">
+              <p className="text-gray-500">No reports found. Create your first report!</p>
+            </div>
+          ) : (
+            <div className="bg-white rounded shadow">
+              <table className="w-full">
+                <thead className="bg-gray-100">
+                  <tr>
                     {flags.bulk_actions && (
-                      <td className="p-4">
+                      <th className="p-4 text-left">
                         <input
                           type="checkbox"
-                          checked={selectedReports.includes(report.id)}
-                          onChange={(e) => {
-                            if (e.target.checked) {
-                              setSelectedReports([...selectedReports, report.id]);
-                            } else {
-                              setSelectedReports(selectedReports.filter((id) => id !== report.id));
-                            }
-                          }}
+                          checked={selectedReports.length === reports.length && reports.length > 0}
+                          onChange={(e) => handleSelectAll(e.target.checked)}
+                          title="Select all reports"
                         />
-                      </td>
+                      </th>
                     )}
-                    <td className="p-4 font-medium">{report.title}</td>
-                    <td className="p-4">{report.damage_location}</td>
-                    <td className="p-4">
-                      {flags.priority_indicators ? (
-                        <PriorityBadge priority={report.priority} />
-                      ) : (
-                        <span className="capitalize">{report.priority}</span>
-                      )}
-                    </td>
-                    <td className="p-4">
-                      <span className="px-2 py-1 bg-gray-100 rounded text-sm capitalize">
-                        {report.status}
-                      </span>
-                    </td>
-                    <td className="p-4 text-sm text-gray-600">
-                      {new Date(report.created_at).toLocaleDateString()}
-                    </td>
-                    <td className="p-4">
-                      <Link
-                        href={`/reports/${report.id}`}
-                        className="text-blue-600 hover:underline mr-4"
-                      >
-                        View
-                      </Link>
-                      <Link
-                        href={`/reports/${report.id}/edit`}
-                        className="text-green-600 hover:underline"
-                      >
-                        Edit
-                      </Link>
-                    </td>
+                    <th className="p-4 text-left">Title</th>
+                    <th className="p-4 text-left">Location</th>
+                    {flags.priority_indicators && (
+                      <th className="p-4 text-left">Priority</th>
+                    )}
+                    <th className="p-4 text-left">Status</th>
+                    <th className="p-4 text-left">Created</th>
+                    <th className="p-4 text-left">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+                </thead>
+                <tbody>
+                  {reports.map((report) => (
+                    <tr key={report.id} className="border-t hover:bg-gray-50">
+                      {flags.bulk_actions && (
+                        <td className="p-4">
+                          <input
+                            type="checkbox"
+                            checked={selectedReports.includes(report.id)}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setSelectedReports([...selectedReports, report.id]);
+                              } else {
+                                setSelectedReports(selectedReports.filter((id) => id !== report.id));
+                              }
+                            }}
+                          />
+                        </td>
+                      )}
+                      <td className="p-4 font-medium">{report.title}</td>
+                      <td className="p-4">{report.damage_location}</td>
+                      {flags.priority_indicators && (
+                        <td className="p-4">
+                          <PriorityBadge priority={report.priority} />
+                        </td>
+                      )}
+                      <td className="p-4">
+                        <span className="px-2 py-1 bg-gray-100 rounded text-sm capitalize">
+                          {report.status}
+                        </span>
+                      </td>
+                      <td className="p-4 text-sm text-gray-600">
+                        {new Date(report.created_at).toLocaleDateString()}
+                      </td>
+                      <td className="p-4">
+                        <Link
+                          href={`/reports/${report.id}`}
+                          className="text-blue-600 hover:underline mr-4"
+                        >
+                          View
+                        </Link>
+                        <Link
+                          href={`/reports/${report.id}/edit`}
+                          className="text-green-600 hover:underline"
+                        >
+                          Edit
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import PhotoUpload from '@/components/PhotoUpload'
+import '@testing-library/jest-dom'
 
 describe('PhotoUpload', () => {
   const mockOnChange = jest.fn()

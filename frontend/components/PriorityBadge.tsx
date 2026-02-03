@@ -1,7 +1,7 @@
 import type { Priority } from '@/types/report';
 
 interface PriorityBadgeProps {
-  priority: Priority | null;
+  priority?: Priority;
 }
 
 const priorityStyles: Record<string, string> = {

@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import PriorityBadge from '@/components/PriorityBadge'
+import '@testing-library/jest-dom'
 
 describe('PriorityBadge', () => {
   it('should render low priority badge with correct styles', () => {
@@ -51,8 +52,8 @@ describe('PriorityBadge', () => {
     expect(screen.getByText('⬆')).toBeInTheDocument()
   })
 
-  it('should render N/A for null priority', () => {
-    render(<PriorityBadge priority={null} />)
+  it('should render N/A for undefined priority', () => {
+    render(<PriorityBadge priority={undefined} />)
     expect(screen.getByText('N/A')).toBeInTheDocument()
   })
 })

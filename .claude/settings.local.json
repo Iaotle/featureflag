@@ -27,7 +27,11 @@
       "Bash(composer require:*)",
       "Bash(netstat:*)",
       "Bash(ss:*)",
-      "Bash(npm run lint)"
+      "Bash(npm run lint)",
+      "Bash(cd /home/iaotle/featureflag/frontend && npm run type-check:*)",
+      "Bash(npm run type-check:*)",
+      "Bash(./vendor/bin/pint:*)",
+      "Bash(command:*)"
     ],
     "additionalDirectories": [
       "/home/iaotle/featureflag"

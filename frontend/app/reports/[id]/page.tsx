@@ -1,4 +1,3 @@
-// frontend/app/reports/[id]/page.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -8,6 +7,7 @@ import { useFlags } from '@/hooks/useFlags';
 import type { DamageReport } from '@/types/report';
 import PriorityBadge from '@/components/PriorityBadge';
 import AIDamageDetection from '@/components/AIDamageDetection';
+import Image from 'next/image';
 
 export default function ViewReportPage() {
   const params = useParams();
@@ -108,14 +108,12 @@ export default function ViewReportPage() {
               <h3 className="text-sm font-medium text-gray-500 mb-1">Location</h3>
               <p>{report.damage_location}</p>
             </div>
-            <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1">Priority</h3>
-              {flags.priority_indicators ? (
+            {flags.priority_indicators && (
+              <div>
+                <h3 className="text-sm font-medium text-gray-500 mb-1">Priority</h3>
                 <PriorityBadge priority={report.priority} />
-              ) : (
-                <p className="capitalize">{report.priority}</p>
-              )}
-            </div>
+              </div>
+            )}
             <div>
               <h3 className="text-sm font-medium text-gray-500 mb-1">Status</h3>
               <p className="capitalize">{report.status}</p>
@@ -140,13 +138,15 @@ export default function ViewReportPage() {
                     key={photo}
                     className="relative bg-gray-100 rounded overflow-hidden"
                   >
-                    <div className="aspect-square w-full bg-gray-200">
-                      <img
+                    <div className="aspect-square w-full bg-gray-200 relative">
+                      <Image
                         src={photo}
                         alt={`Damage photo ${index + 1}`}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
+                        className="object-cover"
+                        fill
+                        sizes="(max-width: 768px) 33vw, 25vw"
                         referrerPolicy="no-referrer"
+                        unoptimized
                       />
                     </div>
                     <div className="p-2">

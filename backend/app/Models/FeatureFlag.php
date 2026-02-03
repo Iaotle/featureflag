@@ -34,6 +34,7 @@ class FeatureFlag extends Model
     {
         $groups = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
         $hash = crc32($userId);
+
         return $groups[abs($hash) % 8];
     }
 
@@ -48,7 +49,7 @@ class FeatureFlag extends Model
         return Cache::remember($cacheKey, 60, function () use ($key, $userId) {
             $flag = Cache::remember("flag:{$key}", 300, fn () => self::where('key', $key)->first());
 
-            if (!$flag || !$flag->is_active) {
+            if (! $flag || ! $flag->is_active) {
                 return false;
             }
 
@@ -67,6 +68,7 @@ class FeatureFlag extends Model
             // User groups rollout
             $userGroup = self::getUserGroup($userId);
             $enabledGroups = $flag->enabled_groups ?? [];
+
             return in_array($userGroup, $enabledGroups);
         });
     }

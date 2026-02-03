@@ -73,7 +73,7 @@ class FlagController extends Controller
 
         $validated = $request->validate([
             'name' => 'string|max:255',
-            'key' => 'string|max:255|unique:feature_flags,key,' . $flag->id,
+            'key' => 'string|max:255|unique:feature_flags,key,'.$flag->id,
             'description' => 'nullable|string',
             'is_active' => 'boolean',
             'rollout_type' => 'in:boolean,user_groups',

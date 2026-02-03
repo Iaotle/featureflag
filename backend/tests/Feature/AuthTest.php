@@ -79,7 +79,7 @@ class AuthTest extends TestCase
                 'user' => [
                     'id' => $user->id,
                     'email' => 'test@example.com',
-                ]
+                ],
             ]);
     }
 

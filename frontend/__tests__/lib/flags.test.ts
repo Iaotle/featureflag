@@ -1,9 +1,3 @@
-/**
- * Tests for the flags library
- * Note: These tests focus on the fetchFlags function behavior.
- * getUserId tests are simplified due to localStorage mocking complexity.
- */
-
 // Mock the flags module partially
 jest.mock('@/lib/flags', () => {
   const original = jest.requireActual('@/lib/flags')

@@ -69,12 +69,6 @@ cd frontend
 npm test
 ```
 
-Or run once without watch mode:
-
-```bash
-npm test -- --watchAll=false
-```
-
 32 tests covering:
 - Component rendering (PhotoUpload, PriorityBadge)
 - Flag fetching and error handling
@@ -160,24 +154,4 @@ npm run type-check
 
 # Linting
 npm run lint
-```
-
-## Troubleshooting
-
-### Port Conflicts
-
-Backend runs on port 8000 by default. Check `backend/.env` for `APP_PORT=8000`.
-
-### Frontend Can't Connect to Backend
-
-Verify `frontend/.env.local` has:
-```
-NEXT_PUBLIC_API_URL=http://localhost:8000/api
-```
-
-### Cache Issues
-
-```bash
-./vendor/bin/sail artisan cache:clear
-./vendor/bin/sail redis redis-cli FLUSHALL # doesn't work
 ```
