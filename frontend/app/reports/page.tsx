@@ -41,6 +41,7 @@ export default function ReportsPage() {
     if (!confirm(`Delete ${selectedReports.length} report(s)?`)) return;
 
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const userId = getUserId();
 
     try {
       const response = await fetch(`${apiUrl}/reports/bulk-delete`, {
@@ -48,7 +49,7 @@ export default function ReportsPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ids: selectedReports }),
+        body: JSON.stringify({ ids: selectedReports, user_identifier: userId }),
       });
 
       if (response.ok) {

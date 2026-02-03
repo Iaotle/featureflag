@@ -1,47 +1,11 @@
 TODOs:
-- figure out if we can create reports with disabled feature flags (we should validate on the server if the users can access the feature flag)
-- photos component will not display photo urls
 - bulk actions select all checkbox does not select all, bulk delete isn't implemented.
-- readme commands don't work:
-    - ~/featureflag/backend (main*) » ./vendor/bin/sail redis redis-cli KEYS "flag:*"
-        (error) ERR unknown command 'redis-cli', with args beginning with: 'KEYS' 'flag:*'     
-- tests don't actually run anything useful for now
-- type-check doesn't exist
-- lint
-
-
 - simplify useFlags hook
-- improve auth maybe
 - flag controller duplicated (one of them is for debug purposes)
-- redis cache double-check
 - remove `backend/database/migrations/2026_01_31_210909_add_uuid_to_feature_flags.php` migration and just roll it into the create_users_table migration
 
-- TZ for frontend
-- README is outdated
 - create script to launch the whole app
 - script to run all tests
 
-
-TESTS:
-   WARN  Metadata found in doc-comment for method Tests\Feature\ReportControllerTest::test_each_user_group_can_submit_basic_report(). Metadata in doc-comments is deprecated and will no longer be supported in PHPUnit 12. Update your test code to use attributes instead.
-   WARN  Metadata found in doc-comment for method Tests\Feature\ReportControllerTest::test_each_user_group_can_submit_report_with_photos_when_boolean_flag(). Metadata in doc-comments is deprecated and will no longer be supported in PHPUnit 12. Update your test code to use attributes instead.
-   WARN  Metadata found in doc-comment for method Tests\Feature\ReportControllerTest::test_each_user_group_can_submit_report_with_priority_when_boolean_flag(). Metadata in doc-comments is deprecated and will no longer be supported in PHPUnit 12. Update your test code to use attributes instead.
-   WARN  Metadata found in doc-comment for method Tests\Feature\ReportControllerTest::test_each_user_group_can_submit_complete_report_when_flags_enabled_for_group(). Metadata in doc-comments is deprecated and will no longer be supported in PHPUnit 12. Update your test code to use attributes instead.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 wontfix:
 - password reset isn't implemented
-- photo attach feature probably 
