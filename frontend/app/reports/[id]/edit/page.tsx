@@ -164,19 +164,6 @@ export default function EditReportPage() {
               </div>
             )}
 
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">Status</label>
-              <select
-                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={formData.status}
-                onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-              >
-                <option value="pending">Pending</option>
-                <option value="in_progress">In Progress</option>
-                <option value="completed">Completed</option>
-              </select>
-            </div>
-
             {flags.damage_photo_upload && (
               <div className="mb-4">
                 <PhotoUpload

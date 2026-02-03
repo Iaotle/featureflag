@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useFlags } from '@/hooks/useFlags';
@@ -14,15 +14,32 @@ export default function NewReportPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const flags = useFlags(['damage_photo_upload', 'priority_indicators']);
+  const { isLoading, ...flags } = useFlags(['damage_photo_upload', 'priority_indicators']);
 
   const [formData, setFormData] = useState<CreateReportData>({
     title: '',
     description: '',
+    damage_location: '',
     status: 'pending',
     user_identifier: getUserId(),
-    ...flags.priority_indicators && {priority: 'medium'}
   });
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (flags.priority_indicators)
+        setFormData({ ...formData, priority: 'medium' })
+    }
+  }, [isLoading])
+
+
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-lg">Loading report...</div>
+      </div>
+    );
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

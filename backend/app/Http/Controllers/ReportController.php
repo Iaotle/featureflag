@@ -81,29 +81,12 @@ class ReportController extends Controller
         $validated = $request->validate([
             'title' => 'string|max:255',
             'description' => 'string',
-            'damage_location' => 'string|max:255',
-            'priority' => 'in:low,medium,high',
+            'damage_location' => 'nullable|string|max:255',
+            'priority' => 'nullable|in:low,medium,high',
             'status' => 'string',
             'photos' => 'nullable|array',
             'user_identifier' => 'string',
         ]);
-
-        // Validate flag for photo upload if photos are being updated
-        if (isset($validated['photos']) && ! empty($validated['photos'])) {
-            $userId = $validated['user_identifier'] ?? $report->user_identifier;
-            $resp = $this->assertFlagEnabledForUser('damage_photo_upload', $userId, 'Photo upload feature is not available for your account.');
-            if ($resp) {
-                return $resp;
-            }
-        }
-
-        if (isset($validated['priority']) && ! empty($validated['priority'])) {
-            $userId = $validated['user_identifier'] ?? $report->user_identifier;
-            $resp = $this->assertFlagEnabledForUser('priority_indicators', $userId, 'Priority feature is not available for your account.');
-            if ($resp) {
-                return $resp;
-            }
-        }
 
         $report->update($validated);
 

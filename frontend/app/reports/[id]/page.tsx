@@ -15,7 +15,7 @@ export default function ViewReportPage() {
   const [report, setReport] = useState<DamageReport | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const flags = useFlags(['priority_indicators', 'ai_damage_detection']);
+  const {isLoading, ...flags} = useFlags(['priority_indicators', 'ai_damage_detection']);
 
   async function fetchReport() {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -59,7 +59,7 @@ export default function ViewReportPage() {
     }
   }
 
-  if (loading) {
+  if (loading || isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-lg">Loading report...</div>
